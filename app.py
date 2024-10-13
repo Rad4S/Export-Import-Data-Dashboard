@@ -22,19 +22,6 @@ shipping_methods = st.sidebar.multiselect(
 # Filter the data based on the selected shipping methods
 filtered_data = data[data['Shipping_Method'].isin(shipping_methods)]
 
-# Scatter plot for Quantity vs. Value
-st.subheader('1. Scatter Plot of Quantity vs. Value')
-plt.figure(figsize=(8, 6))
-sns.scatterplot(x='Quantity', y='Value', data=filtered_data, color='blue')
-plt.title('Scatter Plot of Quantity vs. Value')
-plt.xlabel('Quantity')
-plt.ylabel('Value')
-st.pyplot(plt)
-
-# Percentage of High-Value Transactions
-high_value_transactions = filtered_data[filtered_data['Value'] >= filtered_data['Value'].quantile(0.90)]
-percentage_high_value = len(high_value_transactions) / len(filtered_data) * 100
-
 # Plotting the Pie Chart
 st.subheader('2. Percentage of High-Value Transactions')
 plt.figure(figsize=(6, 6))
@@ -48,6 +35,32 @@ plt.pie(
 plt.title('Percentage of High-Value Transactions')
 plt.axis('equal')
 st.pyplot(plt)
+# Monthly Transaction Trends (Line)
+st.subheader('6. Monthly Transaction Trends')
+filtered_data['Date'] = pd.to_datetime(filtered_data['Date'], format='%d-%m-%Y', dayfirst=True)
+filtered_data['Month'] = filtered_data['Date'].dt.month
+monthly_transactions = filtered_data.groupby('Month')['Value'].sum().reset_index()
+
+plt.figure(figsize=(10, 6))
+sns.lineplot(x='Month', y='Value', data=monthly_transactions, color='pink', linewidth=2)
+plt.title('Monthly Transaction Trends')
+plt.xlabel('Month')
+plt.ylabel('Total Value')
+plt.xticks(rotation=0)
+st.pyplot(plt)
+
+# Scatter plot for Quantity vs. Value
+st.subheader('1. Scatter Plot of Quantity vs. Value')
+plt.figure(figsize=(8, 6))
+sns.scatterplot(x='Quantity', y='Value', data=filtered_data, color='blue')
+plt.title('Scatter Plot of Quantity vs. Value')
+plt.xlabel('Quantity')
+plt.ylabel('Value')
+st.pyplot(plt)
+
+# Percentage of High-Value Transactions
+high_value_transactions = filtered_data[filtered_data['Value'] >= filtered_data['Value'].quantile(0.90)]
+percentage_high_value = len(high_value_transactions) / len(filtered_data) * 100
 
 # Bar plot for Frequency of Shipping Methods
 st.subheader('3. Bar Plot of Shipping Methods')
@@ -79,16 +92,4 @@ plt.ylabel('Weight')
 plt.xticks(rotation=45)
 st.pyplot(plt)
 
-# Monthly Transaction Trends (Line)
-st.subheader('6. Monthly Transaction Trends')
-filtered_data['Date'] = pd.to_datetime(filtered_data['Date'], format='%d-%m-%Y', dayfirst=True)
-filtered_data['Month'] = filtered_data['Date'].dt.month
-monthly_transactions = filtered_data.groupby('Month')['Value'].sum().reset_index()
 
-plt.figure(figsize=(10, 6))
-sns.lineplot(x='Month', y='Value', data=monthly_transactions, color='pink', linewidth=2)
-plt.title('Monthly Transaction Trends')
-plt.xlabel('Month')
-plt.ylabel('Total Value')
-plt.xticks(rotation=0)
-st.pyplot(plt)

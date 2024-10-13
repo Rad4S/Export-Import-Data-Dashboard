@@ -38,7 +38,7 @@ if df.empty:
     st.stop()  # Stop execution if data is not loaded
 
 # Random Sample from the dataset
-df_sample = df.sample(n=3001, random_state=55011)
+df_sample = df.sample(n=min(3001, len(df)), random_state=55011)  # Prevent error if df has fewer than 3001 rows
 
 # Sidebar for filters
 st.sidebar.title("Filters")

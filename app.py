@@ -85,7 +85,6 @@ if not filtered_df.empty:
     st.pyplot(fig)
     plt.close(fig)
 
-    # 4. Histogram: Transaction Value Distribution
     st.subheader('4. Transaction Value Distribution')
     fig, ax = plt.subplots(figsize=(10, 6))
     sns.histplot(filtered_df['Value'], bins=30, kde=True, color='red', alpha=0.7, ax=ax)

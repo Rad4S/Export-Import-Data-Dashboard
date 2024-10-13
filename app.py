@@ -9,7 +9,7 @@ import plotly.express as px
 df = pd.read_csv('Imports_Exports_Dataset.csv')
 
 # Sample for performance
-df_sample = df.sample(n=3000, random_state=42)
+df_sample = df.sample(n=3001, random_state=55035)
 
 # Sidebar filters
 st.sidebar.title("Filters")

@@ -1,9 +1,8 @@
 import pandas as pd
 import streamlit as st
-import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt 
 import seaborn as sns
 import plotly.express as px
-
 
 # Set the Streamlit page configuration
 st.set_page_config(
